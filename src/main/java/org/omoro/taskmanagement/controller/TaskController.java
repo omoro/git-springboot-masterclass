@@ -2,9 +2,11 @@ package org.omoro.taskmanagement.controller;
 
 import org.omoro.taskmanagement.model.Task;
 import org.omoro.taskmanagement.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,13 +25,23 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id);
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+        Task task = taskService.getTaskById(id);
+
+        if (task == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(task);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.addTask(task);
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        Task createdTask = taskService.addTask(task);
+
+        return ResponseEntity
+                .created(URI.create("/api/tasks/" + createdTask.id()))
+                .body(createdTask);
     }
 
     @PutMapping("/{id}")
