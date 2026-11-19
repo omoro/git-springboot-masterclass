@@ -24,4 +24,8 @@ public class TaskService {
         tasks.add(task);
         return task;
     }
+
+    public Task getTaskById(Long id) {
+        return tasks.stream().filter(task -> task.id().equals(id)).findFirst().orElse(null);
+    }
 }
