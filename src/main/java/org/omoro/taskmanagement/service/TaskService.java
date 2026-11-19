@@ -45,4 +45,8 @@ public class TaskService {
 
         return null;
     }
+
+    public boolean deleteTaskById(Long id) {
+        return tasks.removeIf(task -> task.id().equals(id));
+    }
 }
