@@ -11,3 +11,6 @@
 ## Learning progress
 
 Module 1, 2 and 3 - In progess!
+
+## Git Branching
+Learning how to create, switch and merge branches.
