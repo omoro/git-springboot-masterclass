@@ -2,9 +2,7 @@ package org.omoro.taskmanagement.controller;
 
 import org.omoro.taskmanagement.model.Task;
 import org.omoro.taskmanagement.service.TaskService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,10 @@ public class TaskController {
     @GetMapping
     public List<Task> getTasks() {
       return taskService.getTasks();
+    }
+
+    @PostMapping
+    public Task createTask(@RequestBody Task task) {
+        return taskService.addTask(task);
     }
 }
