@@ -1,4 +1,12 @@
 package org.omoro.taskmanagement.model;
 
-public record Task(Long id, String title, boolean completed) {
+import jakarta.validation.constraints.NotBlank;
+
+public record Task(
+        Long id,
+
+        @NotBlank(message = "Task title cannot be blank")
+        String title,
+
+        boolean completed) {
 }

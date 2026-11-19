@@ -1,5 +1,6 @@
 package org.omoro.taskmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.omoro.taskmanagement.model.Task;
 import org.omoro.taskmanagement.service.TaskService;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         Task createdTask = taskService.addTask(task);
 
         return ResponseEntity
@@ -45,7 +46,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
 
         if (task.id() != null && !task.id().equals(id)) {
             return ResponseEntity.badRequest().build();
