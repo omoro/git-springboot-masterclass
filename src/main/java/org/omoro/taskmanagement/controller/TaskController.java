@@ -2,6 +2,7 @@ package org.omoro.taskmanagement.controller;
 
 import org.omoro.taskmanagement.model.Task;
 import org.omoro.taskmanagement.service.TaskService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,5 +30,21 @@ public class TaskController {
     @PostMapping
     public Task createTask(@RequestBody Task task) {
         return taskService.addTask(task);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+
+        if (task.id() != null && !task.id().equals(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Task updatedTask = taskService.updateTask(id, task);
+
+        if(updatedTask == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updatedTask);
     }
 }

@@ -28,4 +28,21 @@ public class TaskService {
     public Task getTaskById(Long id) {
         return tasks.stream().filter(task -> task.id().equals(id)).findFirst().orElse(null);
     }
+
+    public Task updateTask(Long id, Task task) {
+
+        for (int i =0; i < tasks.size(); i++) {
+            if (tasks.get(i).id().equals(id)) {
+                Task task1 = new Task(
+                        task.id(),
+                        task.title(),
+                        task.completed()
+                );
+                tasks.set(i, task1);
+                return task1;
+            }
+        }
+
+        return null;
+    }
 }
