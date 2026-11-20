@@ -41,14 +41,14 @@ public class TaskController {
         Task createdTask = taskService.addTask(task);
 
         return ResponseEntity
-                .created(URI.create("/api/tasks/" + createdTask.id()))
+                .created(URI.create("/api/tasks/" + createdTask.getId()))
                 .body(createdTask);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
 
-        if (task.id() != null && !task.id().equals(id)) {
+        if (task.getId() != null && !task.getId().equals(id)) {
             return ResponseEntity.badRequest().build();
         }
 

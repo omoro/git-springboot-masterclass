@@ -2,6 +2,7 @@ package org.omoro.taskmanagement.service;
 
 import org.omoro.taskmanagement.exception.TaskNotFoundException;
 import org.omoro.taskmanagement.model.Task;
+import org.omoro.taskmanagement.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,47 +11,40 @@ import java.util.List;
 @Service
 public class TaskService {
 
-    private final List<Task> tasks = new ArrayList<>();
+    private final TaskRepository taskRepository;
 
-    public TaskService() {
-        tasks.add(new Task(1L, "Learn Spring Boot", false));
-        tasks.add(new Task(2L, "Learn REST APIs", true));
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     public List<Task> getTasks() {
-        return tasks;
+        return taskRepository.findAll();
     }
 
     public Task addTask(Task task) {
-        tasks.add(task);
-        return task;
+        return taskRepository.save(task);
     }
 
     public Task getTaskById(Long id) {
-        return tasks.stream()
-                .filter(task -> task.id().equals(id))
-                .findFirst()
+        return taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public Task updateTask(Long id, Task task) {
+    public Task updateTask(Long id, Task updateTask) {
+        Task task = getTaskById(id);
 
-        for (int i =0; i < tasks.size(); i++) {
-            if (tasks.get(i).id().equals(id)) {
-                Task task1 = new Task(
-                        task.id(),
-                        task.title(),
-                        task.completed()
-                );
-                tasks.set(i, task1);
-                return task1;
-            }
-        }
+        task.setTitle(updateTask.getTitle());
+        task.setCompleted(updateTask.isCompleted());
 
-        return null;
+        return taskRepository.save(task);
     }
 
     public boolean deleteTaskById(Long id) {
-        return tasks.removeIf(task -> task.id().equals(id));
+        if(!taskRepository.existsById(id)) {
+            return false;
+        }
+
+        taskRepository.deleteById(id);
+        return true;
     }
 }
