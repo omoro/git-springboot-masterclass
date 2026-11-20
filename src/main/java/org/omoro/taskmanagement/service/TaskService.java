@@ -1,5 +1,6 @@
 package org.omoro.taskmanagement.service;
 
+import org.omoro.taskmanagement.exception.TaskNotFoundException;
 import org.omoro.taskmanagement.model.Task;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,10 @@ public class TaskService {
     }
 
     public Task getTaskById(Long id) {
-        return tasks.stream().filter(task -> task.id().equals(id)).findFirst().orElse(null);
+        return tasks.stream()
+                .filter(task -> task.id().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     public Task updateTask(Long id, Task task) {
