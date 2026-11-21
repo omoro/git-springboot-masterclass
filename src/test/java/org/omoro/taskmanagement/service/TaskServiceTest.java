@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.omoro.taskmanagement.exception.TaskNotFoundException;
 import org.omoro.taskmanagement.model.Task;
+import org.omoro.taskmanagement.model.TaskPriority;
 import org.omoro.taskmanagement.repository.TaskRepository;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class TaskServiceTest {
         // Arrange: Create a mocked repository
         TaskRepository repository = mock(TaskRepository.class);
 
-        Task task = new Task(null, "Learn JUnit", false);
+        Task task = new Task(null, "Learn JUnit", false, TaskPriority.MEDIUM);
 
         when(repository.findAll()).thenReturn(List.of(task));
 
@@ -43,7 +44,7 @@ public class TaskServiceTest {
         // Arrange
         TaskRepository repository = mock(TaskRepository.class);
 
-        Task task = new Task(1L, "Learn Mockito", false);
+        Task task = new Task(1L, "Learn Mockito", false, TaskPriority.MEDIUM);
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(task));
@@ -84,8 +85,8 @@ public class TaskServiceTest {
         // Arrange
         TaskRepository repository = mock(TaskRepository.class);
 
-        Task task = new Task(null, "Learn unit testing", false);
-        Task savedTask = new Task(1L, "Learn unit testing", false);
+        Task task = new Task(null, "Learn unit testing", false, TaskPriority.MEDIUM);
+        Task savedTask = new Task(1L, "Learn unit testing", false, TaskPriority.MEDIUM);
 
         when(repository.save(task)).thenReturn(savedTask);
 
@@ -107,8 +108,8 @@ public class TaskServiceTest {
         // Arrange
         TaskRepository repository = mock(TaskRepository.class);
 
-        Task existingTask = new Task(1L, "Old title", false);
-        Task updatedTask = new Task(null, "New title", true);
+        Task existingTask = new Task(1L, "Old title", false, TaskPriority.MEDIUM);
+        Task updatedTask = new Task(null, "New title", true, TaskPriority.HIGH);
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(existingTask));

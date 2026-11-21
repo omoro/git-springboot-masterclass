@@ -35,6 +35,7 @@ public class TaskService {
 
         task.setTitle(updateTask.getTitle());
         task.setCompleted(updateTask.isCompleted());
+        task.setPriority(updateTask.getPriority());
 
         return taskRepository.save(task);
     }

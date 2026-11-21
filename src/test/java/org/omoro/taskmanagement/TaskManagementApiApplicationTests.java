@@ -2,6 +2,7 @@ package org.omoro.taskmanagement;
 
 import org.junit.jupiter.api.Test;
 import org.omoro.taskmanagement.model.Task;
+import org.omoro.taskmanagement.model.TaskPriority;
 import org.omoro.taskmanagement.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ class TaskManagementApiApplicationTests {
 	void shouldSaveAndRetrieveTask() {
 
 		// Arrange
-		Task task = new Task(null, "Integration testing", false);
+		Task task = new Task(null, "Integration testing", false, TaskPriority.MEDIUM);
 
 		// Act
 		Task savedTask = taskRepository.save(task);
