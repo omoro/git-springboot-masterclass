@@ -70,6 +70,6 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

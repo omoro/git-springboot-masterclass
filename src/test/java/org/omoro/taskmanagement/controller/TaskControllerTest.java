@@ -31,7 +31,8 @@ public class TaskControllerTest {
         MvcResult result = mockMvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON).content("""
                 {
                     "title": "Lean MockMvc",
-                    "completed": false
+                    "completed": false,
+                    "priority": "HIGH"
                 }
                 """)).andDo(print()).andExpect(status().isCreated()).andReturn();
 
@@ -55,7 +56,8 @@ public class TaskControllerTest {
         MvcResult result = mockMvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON).content("""
                 {
                     "title": "Original title",
-                    "completed": false
+                    "completed": false,
+                    "priority": "HIGH"
                 }
                 """)).andExpect(status().isCreated()).andReturn();
 
@@ -64,11 +66,14 @@ public class TaskControllerTest {
 
         // Act: Update the task
         mockMvc.perform(put("/api/tasks/" + taskId).contentType(MediaType.APPLICATION_JSON).content("""
-                {
-                "title": "Updated title",
-                "completed": true
-                }
-                """)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id").value(taskId)).andExpect(jsonPath("$.title").value("Updated title")).andExpect(jsonPath("$.completed").value(true));
+                        {
+                            "title": "Updated title",
+                            "completed": true,
+                            "priority": "LOW"
+                        }
+                        """)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id").value(taskId)).andExpect(jsonPath("$.title").value("Updated title"))
+                .andExpect(jsonPath("$.completed").value(true))
+                .andExpect(jsonPath("$.priority").value("LOW"));
     }
 
     @Test
@@ -78,7 +83,8 @@ public class TaskControllerTest {
         MvcResult result = mockMvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON).content("""
                 {
                     "title": "Task to delete",
-                    "completed": false
+                    "completed": false,
+                    "priority": "HIGH"
                 }
                 """)).andExpect(status().isCreated()).andReturn();
 
@@ -92,6 +98,4 @@ public class TaskControllerTest {
         // Assert: Confirm the task no longer exists
         mockMvc.perform(get("/api/tasks/" + taskId)).andExpect(status().isNotFound());
     }
-
-
 }

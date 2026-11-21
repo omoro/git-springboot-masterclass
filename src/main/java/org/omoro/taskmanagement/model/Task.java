@@ -16,13 +16,17 @@ public class Task {
 
     private boolean completed;
 
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority = TaskPriority.MEDIUM;
+
     public Task() {
     }
 
-    public Task(Long id, String title, boolean completed) {
+    public Task(Long id, String title, boolean completed,  TaskPriority priority) {
         this.id = id;
         this.title = title;
         this.completed = completed;
+        this.priority = priority;
     }
 
     public Long getId() {
@@ -47,5 +51,13 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public TaskPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
     }
 }
