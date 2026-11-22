@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
         - name: task-management-api
-          image: task-management-api:1.0.0
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/omoro/git-springboot-masterclass.git:latest
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8181
