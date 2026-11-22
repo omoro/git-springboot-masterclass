@@ -54,3 +54,19 @@ jobs:
         with:
           name: task-management-api
           path: target/*.jar
+
+  deploy:
+    name: Deploy to local Kubernetes
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, Linux, x64]
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Deploy to Kubernetes
+        run: kubectl apply -f k8s/
+
+      - name: Verify deployment
+        run: kubectl rollout status deployment/task-management-api --timeout=120s
