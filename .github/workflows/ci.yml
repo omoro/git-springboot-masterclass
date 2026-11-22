@@ -47,7 +47,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/omoro/git-springboot-masterclass.git:latest
+          tags: |
+            ghcr.io/omoro/git-springboot-masterclass:latest
+            ghcr.io/omoro/git-springboot-masterclass:${{ github.sha }}
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
@@ -67,6 +69,11 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: kubectl apply -f k8s/
+
+      - name: Deploy commit-specific image
+        run: |
+          kubectl set image deployment/task-management-api \
+            task-management-api=ghcr.io/omoro/git-springboot-masterclass:${GITHUB_SHA}
 
       - name: Verify deployment
         run: kubectl rollout status deployment/task-management-api --timeout=120s
