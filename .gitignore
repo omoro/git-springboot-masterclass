@@ -19,3 +19,7 @@ target/
 *.iml
 *.ipr
 
+### Kubernetes Secret file ###
+k8s/*secret*.yaml
+k8s/*secret*.yml
+
