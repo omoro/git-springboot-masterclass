@@ -5,7 +5,7 @@ metadata:
   name: task-management-api
 
 spec:
-  type: NodePort
+  type: ClusterIP
 
   selector:
     app: task-management-api
@@ -14,4 +14,3 @@ spec:
     - protocol: TCP
       port: 8181
       targetPort: 8181
-      nodePort: 30181
