@@ -3,6 +3,8 @@ kind: Deployment
 
 metadata:
   name: task-management-api
+  labels:
+    app:  task-management-api
 
 spec:
   replicas: 2

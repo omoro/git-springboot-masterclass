@@ -5,6 +5,7 @@ namespace: task-test
 
 resources:
   - ../../base
+  - ingress.yaml
 
 images:
   - name: ghcr.io/omoro/git-springboot-masterclass
